@@ -53,6 +53,7 @@ function App() {
                             key={movie.name}
                             image={movie.image}
                             rating={movie.rating}
+                            trailerYoutubeId={movie.trailerYoutubeId}
                         />
                     ))
                 ) : (
