@@ -1,20 +1,14 @@
-import MovieCard from "./MovieCard";
+import MovieCard from "./MovieCard.jsx";
 import {MOVIES} from "./movies.data.js";
 import {useMemo, useState} from "react";
-import {useDebounce} from "./hooks/useDebounce";
-import {useTheme} from "./hooks/useTheme";
+import {useDebounce} from "../../hooks/useDebounce.js";
+import {useTheme} from "../../hooks/useTheme.js";
 
 
 function App() {
-
     const {theme, toggleTheme} = useTheme()
-
     const [searchTerm, setSearchTerm] = useState('')
-
     const debouncedSearch = useDebounce(searchTerm, 500);
-
-
-
     const movies= useMemo(() =>{
         return MOVIES.filter(movie =>
             movie.name.toLowerCase().includes(debouncedSearch.toLowerCase())
@@ -23,14 +17,13 @@ function App() {
 
   return (
     <>
-        <div className="min-h-screen w-full bg-white dark:bg-black text-black dark:text-white px-6 py-5">
+        <div>
             <header className="mb-10 flex items-center justify-between">
                 <img
                     src="/netflix.png"
                     alt="Netflix"
                     className="h-8 w-auto"
                 />
-
                 <div>
                     <input type="search" value={searchTerm} onChange={(e) => {
                         setSearchTerm(e.target.value)
@@ -63,7 +56,7 @@ function App() {
                 ) : (
                     <p>Movie not found</p>
                 )}
-            </main>
+             </main>
         </div>
     </>
   )
