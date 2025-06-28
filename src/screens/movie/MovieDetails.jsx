@@ -1,6 +1,13 @@
 import {useParams} from 'react-router-dom';
-import {useMemo} from "react";
-import {MOVIES} from "./movies.data.js";
+import {lazy, Suspense, useMemo} from "react";
+import {MOVIES} from "../home/movies.data.js";
+
+
+const LazyMovieComments = lazy(() =>
+    import ('./MovieComments').then(c => ({
+        default:c.MovieComments
+    }))
+)
 
 export function MovieDetails() {
 
@@ -22,6 +29,9 @@ export function MovieDetails() {
 
         <h1>Карточка фильма #{id}</h1>
         <h2>{movie.name}</h2>
+        <Suspense fallback={<div>Loading...</div>}>
+        <LazyMovieComments/>
+        </Suspense>
     </div>
     )
 }
