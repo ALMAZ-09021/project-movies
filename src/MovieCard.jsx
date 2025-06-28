@@ -1,10 +1,14 @@
-import {FavoriteButton} from "./FavoriteButton.jsx";
-import {useState} from "react";
+import FavoriteButton from "./FavoriteButton.jsx";
+import {memo, useCallback, useState} from "react";
 import {Modal} from "./components/ui/Modal.jsx";
 
-export function MovieCard({ image, rating, trailerYoutubeId }) {
+function MovieCard({ image, rating, trailerYoutubeId }) {
 
     const [isOpenTrailer, setIsOpenTrailer] = useState(false)
+
+    const openTrailer = useCallback(() =>{
+        setIsOpenTrailer(true)
+    }, [])
 
     return (
         <div className="relative w-[200px] rounded-2xl overflow-hidden bg-neutral-900
@@ -26,24 +30,21 @@ export function MovieCard({ image, rating, trailerYoutubeId }) {
             </Modal>
             )}
 
-
             <img
                 src={image}
                 alt="Movie Poster"
                 className="w-full h-auto object-cover"
             />
 
-
             <div className="absolute top-2 right-2 z-10 flex gap-2">
                 <FavoriteButton/>
                 <button
                 className="btn"
-                onClick={() => setIsOpenTrailer(true)}
+                onClick={openTrailer}
                 >
                     🎥
                 </button>
             </div>
-
 
             <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-2 text-sm text-white font-semibold">
                 IMDb: {rating}
@@ -52,3 +53,5 @@ export function MovieCard({ image, rating, trailerYoutubeId }) {
         </div>
     );
 }
+
+export default memo(MovieCard)
