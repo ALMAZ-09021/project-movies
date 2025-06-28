@@ -1,6 +1,6 @@
-import {MovieCard} from "./MovieCard";
+import MovieCard from "./MovieCard";
 import {MOVIES} from "./movies.data.js";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {useDebounce} from "./hooks/useDebounce";
 import {useTheme} from "./hooks/useTheme";
 
@@ -13,9 +13,13 @@ function App() {
 
     const debouncedSearch = useDebounce(searchTerm, 500);
 
-    const movies= MOVIES.filter(movie => movie.name.toLowerCase()
-        .includes(debouncedSearch.toLowerCase())
-    )
+
+
+    const movies= useMemo(() =>{
+        return MOVIES.filter(movie =>
+            movie.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+        )
+    }, [debouncedSearch])
 
   return (
     <>
